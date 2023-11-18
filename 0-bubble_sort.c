@@ -1,6 +1,10 @@
 #include "sort.h"
 
-
+/**
+ * bubble_sort - Sorting Aglo
+ * @array: to be sorted
+ * @size: of array
+*/
 void bubble_sort(int *array, size_t size)
 {
 	size_t i, n = size;
