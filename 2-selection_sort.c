@@ -1,6 +1,10 @@
 #include "sort.h"
 
-
+/**
+ * selection_sort - Sorting Aglo
+ * @array: to be sorted
+ * @size: of array
+*/
 void selection_sort(int *array, size_t size)
 {
 	size_t i, j, min;
