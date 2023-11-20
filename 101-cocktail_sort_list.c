@@ -1,42 +1,74 @@
 #include "sort.h"
 
+void swap(listint_t **head, listint_t **tail, listint_t *a, listint_t *b);
+
 /**
  * cocktail_sort_list - Sorting Aglo
  * @list: to be sorted
 */
 void cocktail_sort_list(listint_t **list)
 {
-	size_t i, n = 0;
-	int tmp;
-	bool repeat = true;
-	listint_t *u_head, *u_tail, *forward, *backward;
+	bool repeat = true, first = true;
+	listint_t *tail, *forward, *backward;
 
 	if (!list || !*list || !(*list)->next)
 		return;
 
-	while ((u_head = u_head->next))
-		u_tail = u_head;
-	u_head = *list;
-	forward = u_head;
-	backward = u_tail;
+	forward = *list;
 	while (repeat)
 	{
 		repeat = false;
 		while (forward && forward->next)
 		{
-			if (forward > forward->next)
-		}
-		for (i = 1; i < n; i++)
-		{
-			if (array[i - 1] > array[i])
+			if (!forward->next->next && first)
 			{
-				tmp = array[i - 1];
-				array[i - 1] = array[i];
-				array[i] = tmp;
-				repeat = true;
-				print_array(array, size);
+				tail = forward->next;
+				first = false;
 			}
+			if (forward->n > forward->next->n)
+			{
+				swap(list, &tail, forward, forward->next);
+				backward = forward->prev;
+				repeat = true;
+				print_list(*list);
+				continue;
+			}
+			forward = forward->next;
 		}
-		n--;
+		while (backward && backward->prev)
+		{
+			if (backward->n < backward->prev->n)
+			{
+				swap(list, &tail, backward->prev, backward);
+				forward = backward->next;
+				repeat = true;
+				print_list(*list);
+				continue;
+			}
+			backward = backward->prev;
+		}
 	}
+}
+
+/**
+ * swap - two linked lsit nodes
+ * @head: of list
+ * @tail: of list
+ * @a: a node
+ * @b: another node
+*/
+void swap(listint_t **head, listint_t **tail, listint_t *a, listint_t *b)
+{
+	a->next = b->next;
+	if (b->next)
+		b->next->prev = a;
+	else
+		*tail = a;
+	b->next = a;
+	b->prev = a->prev;
+	if (b->prev)
+		b->prev->next = b;
+	else
+		*head = b;
+	a->prev = b;
 }
