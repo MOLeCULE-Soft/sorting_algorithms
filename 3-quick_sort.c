@@ -6,7 +6,7 @@ size_t lomuto_partition(int *arr, size_t low, size_t high, size_t size)
 	int i = low - 1, tmp;
 	size_t j;
 
-	for (j = low; j < high; j++)
+	for (j = low; j <= high - 1; j++)
 	{
 		if (arr[j] <= pivot)
 		{
@@ -17,25 +17,24 @@ size_t lomuto_partition(int *arr, size_t low, size_t high, size_t size)
 			print_array(arr, size);
 		}
 	}
-	printf("We are here\n");
-	pivot =  arr[i + 1];
-	tmp = arr[i + 1];
-	arr[i + 1] = arr[high];
+	i++;
+	tmp = arr[i];
+	arr[i] = arr[high];
 	arr[high] = tmp;
 
-	return (i + 1);
+	return (i);
 }
 
-void quicksort_lomuto(int *arr, size_t low, size_t high, size_t size)
+void quicksort_lomuto(int *arr, int low, int high, size_t size)
 {
 	size_t partition_index;
 
-	if (low < high)
-	{
-		partition_index = lomuto_partition(arr, low, high, size);
-		quicksort_lomuto(arr, low, partition_index - 1, size);
-		quicksort_lomuto(arr, partition_index + 1, high, size);
-	}
+	if (low >= high || low < 0)
+		return;
+
+	partition_index = lomuto_partition(arr, low, high, size);
+	quicksort_lomuto(arr, low, partition_index - 1, size);
+	quicksort_lomuto(arr, partition_index + 1, high, size);
 }
 
 void quick_sort(int *array, size_t size)
